@@ -26,24 +26,6 @@ interface Orphanage {
 }
 
 export default function OrphanagesMap() {
-  // interface Location {
-  //   coords: {
-  //     latitude: number;
-  //     longitude: number;
-  //   };
-  // }
-  
-  //   useEffect(() => {
-  //     (async () => {
-  //       const { status } = await Location.requestPermissionsAsync();
-  //       if (status !== 'granted') {
-  //         alert('Por favor, permita o uso do localização');
-  //       }
-  
-  //       const location = await Location.getCurrentPositionAsync({});
-  //       setLocation(location);
-  //     })();
-  //   }, []);
   const [location, setLocation] = useState<LocationParams>()
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
   const navigation = useNavigation();
