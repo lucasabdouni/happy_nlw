@@ -52,7 +52,7 @@ $ yarn start
 
 # Start server mobile(running emulator)
 $ yarn start
-$ yarn run react-native run-android
+$ on the website click on start emulator or read the QRCODE on the mobile (You must have the expo installed on your cell phone)
 
 # running on port 3333
 localhost:3333
