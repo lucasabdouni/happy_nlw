@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import MapView, { MapEvent, Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 import mapMarkerImg from '../../images/map-marker.png';
+
+interface LocationParams {
+  coords: {
+    latitude: number;
+    longitude: number;
+  }
+}
 
 export default function SelectMapPosition() {
   const navigation = useNavigation();
   const [position, setPosition] = useState ({ latitude: 0, longitude: 0 });
+  const [location, setLocation] = useState<LocationParams>();
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestPermissionsAsync();
+       if (status !== 'granted') {
+        alert('Eita, precisamos de acesso ào GPS...');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({}); 
+      setLocation(location);
+    })();
+  }, []);
 
   function handleNextStep() {
     navigation.navigate('OrphanageData', { position });
@@ -23,11 +45,11 @@ export default function SelectMapPosition() {
     <View style={styles.container}>
       <MapView 
         initialRegion={{
-          latitude: -22.4868672,
-          longitude: -44.1055362,
+          latitude: location?.coords.latitude,
+          longitude: location?.coords.latitude,
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
-        }}
+        } as any}
         style={styles.mapStyle}
         onPress={handleSelectedMapPosition}
       >
